@@ -1,11 +1,8 @@
 import pandas as pd
 
-# Load data
+
 df = pd.read_csv("bestsellers.csv")
 
-# ----------------------------
-# Basic cleaning
-# ----------------------------
 df.drop_duplicates(inplace=True)
 
 df.rename(columns={
@@ -16,17 +13,13 @@ df.rename(columns={
 
 df["Price"] = df["Price"].astype(float)
 
-# ----------------------------
-# Sanity checks (non-breaking)
-# ----------------------------
+
 required_columns = ["Title", "Author", "Genre", "User Rating", "Price", "Publication year"]
 missing = [col for col in required_columns if col not in df.columns]
 if missing:
     raise ValueError(f"Missing required columns: {missing}")
 
-# ----------------------------
-# Core outputs (your original logic)
-# ----------------------------
+
 print(df.head())
 print(df.shape)
 print(df.describe())
@@ -41,9 +34,6 @@ print(avg_rating)
 author_counts.head(10).to_csv("top_authors.csv")
 avg_rating.to_csv("avg_rating.csv")
 
-# ----------------------------
-# Added features
-# ----------------------------
 
 # 1. Top 10 highest-rated books
 top_books = df.sort_values(by="User Rating", ascending=False).head(10)
